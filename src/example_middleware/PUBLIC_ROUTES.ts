@@ -1,9 +1,5 @@
-import { locales } from "@/config/languages";
-
 export const PUBLIC_ROUTES = [
   "/",
-  ...locales.map((locale) => `/${locale}`),
-  ...locales.map((locale) => `/${locale}`),
   "/landing",
   "/sign-in",
   "/sign-up",

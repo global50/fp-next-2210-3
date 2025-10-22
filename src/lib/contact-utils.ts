@@ -1,11 +1,10 @@
-import { Mail, Phone, MessageCircle, Globe, Github, Linkedin, Twitter, Link as LinkIcon } from "lucide-react"
-// import { Video as LucideIcon } from "lucide-react"
+import { Mail, Phone, MessageCircle, Globe, Github, Linkedin, Twitter, Link as LinkIcon, type LucideIcon } from "lucide-react"
 import { ContactInfoEntry } from "@/types/profile"
 
 export interface ContactTypeConfig {
   value: ContactInfoEntry['type']
   label: string
-  icon: any /* LucideIcon */
+  icon: LucideIcon
   urlPrefix?: string
   placeholder: string
   validateValue: (value: string) => boolean
@@ -122,7 +121,7 @@ export function getContactTypeConfig(type: ContactInfoEntry['type']): ContactTyp
   return CONTACT_TYPES.find(ct => ct.value === type)
 }
 
-export function getContactIcon(type: ContactInfoEntry['type']): any /* : LucideIcon */ {
+export function getContactIcon(type: ContactInfoEntry['type']): LucideIcon {
   const config = getContactTypeConfig(type)
   return config?.icon || Globe
 }

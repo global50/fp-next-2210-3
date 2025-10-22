@@ -36,8 +36,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Защищенные маршруты - требуют авторизации
-  const protectedRoutes = []
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const protectedRoutes: string[] = []
+  const isProtectedRoute = protectedRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   )
 
