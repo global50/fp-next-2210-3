@@ -81,8 +81,9 @@ export function useTelegramAuth(): UseTelegramAuthReturn {
       setIsLoading(true);
       setError(null);
 
-      // Use localhost for development - this should be configurable in production
-      const initiatingHostOrigin = 'http://localhost:5173';
+      const initiatingHostOrigin = typeof window !== 'undefined'
+        ? window.location.origin
+        : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
       // Generate auth state
       const response = await fetch(

@@ -10,6 +10,7 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [initialLoadComplete, setInitialLoadComplete] = useState(false)
+  const [profileLoadAttempted, setProfileLoadAttempted] = useState(false)
 
   // Fetch user profile from profiles table using session from context
   const fetchUserProfile = async (userId: string, sessionToUse: Session) => {
@@ -126,14 +127,16 @@ export function useAuth() {
         switch (event) {
           case 'SIGNED_IN':
             console.log('[useAuth] User signed in')
-            // Only fetch if we don't already have profile data from initial load
-            if (session?.user && !profile) {
+            // Only fetch if we haven't already attempted to load profile
+            if (session?.user && !profileLoadAttempted) {
+              setProfileLoadAttempted(true)
               await fetchUserProfile(session.user.id, session)
             }
             break
           case 'SIGNED_OUT':
             console.log('[useAuth] User signed out')
             setProfile(null)
+            setProfileLoadAttempted(false)
             break
           case 'TOKEN_REFRESHED':
             console.log('[useAuth] Token refreshed')
@@ -148,7 +151,7 @@ export function useAuth() {
       isSubscribed = false
       subscription.unsubscribe()
     }
-  }, [])
+  }, [profileLoadAttempted])
 
   const signOut = async () => {
     // Clear cached profile data on sign out

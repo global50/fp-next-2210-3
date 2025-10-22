@@ -12,7 +12,7 @@ import { useSettingsData } from "./hooks/use-settings-data"
 import { Clock, Palette, LogOut, Check, ChevronsUpDown } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect, useMemo } from "react"
-import { useNavigate } from "react-router-dom"
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useAuthContext } from "@/components/auth-provider"
 
@@ -121,7 +121,7 @@ export function SettingsPage() {
 
 export function MainSettings({ settings, allTimezones, onUpdate, hasUnsavedChanges }: MainSettingsProps) {
   const { setTheme } = useTheme()
-  const navigate = useNavigate()
+  const router = useRouter()
   const { signOut } = useAuthContext()
   const [timezoneOpen, setTimezoneOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
@@ -151,7 +151,7 @@ export function MainSettings({ settings, allTimezones, onUpdate, hasUnsavedChang
 
   const handleExit = async () => {
     await signOut()
-    navigate('/')
+    router.push('/')
   }
 
   // Find current timezone label
